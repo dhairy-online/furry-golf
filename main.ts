@@ -24,7 +24,10 @@ export const canvas = new Canvas({
 let isSpace = false;
 
 function gameLoop() {
-  throw new Error("Function not yet implemented");
+  canvas.setDrawColor(25, 20, 55, 255);
+  canvas.clear();
+  canvas.present();
+  Deno.sleepSync(canvasProperties.sleepSyncTimer);
 }
 
 canvas.present();
