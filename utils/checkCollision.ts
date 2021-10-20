@@ -16,7 +16,7 @@ interface checkCollisionable {
  * @param entity checkCollisionable interface
  * @returns {boolean} if its colliding or not
  */
-export default function checkCollision(
+export function checkCollision(
   entity: checkCollisionable,
 ): boolean {
   return !(entity.x2 > entity.w1 + entity.x1 ||

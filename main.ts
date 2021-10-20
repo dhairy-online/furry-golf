@@ -1,6 +1,7 @@
 // Copyright (c) 2021-2021 Dhairy Srivastava. All rights reserved. MIT license.
 
 import { Canvas } from "https://deno.land/x/sdl2@0.1-alpha.6/src/canvas.ts";
+import { Golf } from "./objects/Golf.ts";
 
 const canvasProperties = {
   title: "furry-golf",
@@ -23,14 +24,18 @@ export const canvas = new Canvas({
 
 let isSpace = false;
 
+const golfBall = new Golf({
+  x: 100,
+  y: 100,
+});
+
 function gameLoop() {
   canvas.setDrawColor(25, 20, 55, 255);
   canvas.clear();
+  golfBall.render();
   canvas.present();
   Deno.sleepSync(canvasProperties.sleepSyncTimer);
 }
-
-canvas.present();
 
 for await (const event of canvas) {
   switch (event.type) {
