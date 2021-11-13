@@ -9,7 +9,9 @@ const canvasProperties = {
   height: 400,
   sleepSyncTimer: 10,
 };
-
+/**
+ * A simple test!
+ */
 export const canvas = new Canvas({
   title: canvasProperties.title,
   height: canvasProperties.width,
