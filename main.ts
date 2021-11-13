@@ -1,29 +1,41 @@
 // Copyright (c) 2021-2021 Dhairy Srivastava. All rights reserved. MIT license.
+// OOP code
 
-import { Canvas } from "https://deno.land/x/sdl2@0.1-alpha.6/src/canvas.ts";
+import { Canvas as Window } from "https://deno.land/x/sdl2@0.2-alpha.1/src/canvas.ts";
 import { Golf } from "./objects/Golf.ts";
-
-const canvasProperties = {
-  title: "furry-golf",
-  width: 800,
-  height: 400,
-  sleepSyncTimer: 10,
-};
-/**
- * A simple test!
- */
-export const canvas = new Canvas({
-  title: canvasProperties.title,
-  height: canvasProperties.width,
-  width: canvasProperties.height,
-  centered: true,
-  fullscreen: false,
-  hidden: false,
-  resizable: false,
-  minimized: false,
-  maximized: false,
-});
-
+interface CanvasProps {
+  title: string;
+  width: number;
+  height: number;
+  sleepSyncTimer: number;
+}
+class Canvas extends Window {
+  props: CanvasProps;
+  constructor() {
+    super({
+      title: props.title,
+      height: props.height,
+      width: props.width,
+      centered: true,
+      fullscreen: false,
+      hidden: false,
+      resizable: false,
+      minimized: false,
+      maximized: false,
+      flags: null,
+    });
+    this.props = props
+  }
+  frame() {
+    this.setDrawColor(25, 20, 55, 255);
+    this.clear();
+    golfBall.render();
+    this.present();
+    Deno.sleepSync(this.props.sleepSyncTimer);
+  }
+}
+export const canvas = new Canvas();
+canvas.props
 let isSpace = false;
 
 const golfBall = new Golf({
@@ -31,18 +43,10 @@ const golfBall = new Golf({
   y: 100,
 });
 
-function gameLoop() {
-  canvas.setDrawColor(25, 20, 55, 255);
-  canvas.clear();
-  golfBall.render();
-  canvas.present();
-  Deno.sleepSync(canvasProperties.sleepSyncTimer);
-}
-
 for await (const event of canvas) {
   switch (event.type) {
     case "draw":
-      gameLoop();
+      canvas.frame();
       break;
     case "quit":
       canvas.quit();
